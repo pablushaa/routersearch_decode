@@ -110,3 +110,5 @@ for line in open("settings/ips.txt").readlines():
 
 end_time = time.time()
 print(f"просканил много айпи за {end_time - start_time} секунд")
+
+#lo
