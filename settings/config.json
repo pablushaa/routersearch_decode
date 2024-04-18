@@ -1,5 +1,5 @@
 {
     "lettets": true, 
-    "ign_unknown": true, 
+    "ign_unknown": false, 
     "ports": [80, 8080]
 }

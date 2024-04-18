@@ -9,14 +9,17 @@ import json
 # loading configs
 with open('settings/config.json') as file:
     cfg = json.load(file)
-
+ 
 ports = []
 for port in list(cfg["ports"]): ports.append(str(port))
 must_letters = cfg["lettets"]
 ignore_unknown = cfg["ign_unknown"]
 search = open("settings/search.txt").read().split("\n")
+banlist = open("settings/banlist.txt").read().split("\n")
 if not search or search == [""]: bsearch = False
 else: bsearch = True
+if not banlist or banlist == [""]: blist = False
+else: blist = True
 
 socket.setdefaulttimeout(0.1)
 
@@ -24,6 +27,8 @@ socket.setdefaulttimeout(0.1)
 print(f"{Style.BRIGHT}Ports:{Style.RESET_ALL} {Fore.CYAN}{' '.join(ports)}{Style.RESET_ALL} ")
 if bsearch: print(f"{Style.BRIGHT}Searching:{Style.RESET_ALL} {Fore.GREEN}{bsearch}{Style.RESET_ALL}")
 else: print(f"{Style.BRIGHT}Searching:{Style.RESET_ALL} {Fore.RED}{bsearch}{Style.RESET_ALL}")
+if blist: print(f"{Style.BRIGHT}Banlist:{Style.RESET_ALL} {Fore.GREEN}{blist}{Style.RESET_ALL}")
+else: print(f"{Style.BRIGHT}Banlist:{Style.RESET_ALL} {Fore.RED}{blist}{Style.RESET_ALL}")
 if must_letters: print(f"{Style.BRIGHT}Must title have letters:{Style.RESET_ALL} {Fore.GREEN}{must_letters}{Style.RESET_ALL}")
 else: print(f"{Style.BRIGHT}Must title have letters:{Style.RESET_ALL} {Fore.RED}{must_letters}{Style.RESET_ALL}")
 if ignore_unknown: print(f"{Style.BRIGHT}Ignore unknown titles:{Style.RESET_ALL} {Fore.GREEN}{ignore_unknown}{Style.RESET_ALL}")
@@ -89,8 +94,9 @@ def scan(ip):
         title = get_title(url)
         if bsearch:
             for elem in search:
-                if elem in title:
+                if elem in title and elem != "Unknown/redirect":
                     print(f"{Style.BRIGHT}{url}{Style.RESET_ALL} >> {Fore.CYAN}{title}{Style.RESET_ALL}")
+        elif any(item in title for item in banlist): pass
         elif title == "Unknown/redirect" and ignore_unknown == False:
             print(f"{Style.BRIGHT}{url}{Style.RESET_ALL} >> {Fore.CYAN}{title}{Style.RESET_ALL}")
         elif title != "Unknown/redirect":
