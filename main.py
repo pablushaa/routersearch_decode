@@ -116,5 +116,3 @@ for line in open("settings/ips.txt").readlines():
 
 end_time = time.time()
 print(f"Scanned all ips in {int(end_time - start_time)} seconds")
-
-#lo
