@@ -94,7 +94,7 @@ def scan(ip):
         title = get_title(url)
         if bsearch:
             for elem in search:
-                if elem in title and elem != "Unknown/redirect":
+                if elem in title and title != "Unknown/redirect":
                     print(f"{Style.BRIGHT}{url}{Style.RESET_ALL} >> {Fore.CYAN}{title}{Style.RESET_ALL}")
         elif any(item in title for item in banlist): pass
         elif title == "Unknown/redirect" and ignore_unknown == False:
